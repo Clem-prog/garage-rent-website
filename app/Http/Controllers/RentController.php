@@ -171,10 +171,11 @@ class RentController extends Controller
     public function viewRents()
     {
         $rents = Rent::with(['user', 'vehicle'])
+            ->whereDate('startDate', '<=', today())
             ->whereDate('endDate', '>', today())
             ->orderBy('startDate')
             ->get();
- 
+
         return view('admin.allrent', ['rents' => $rents]);
     }
  
