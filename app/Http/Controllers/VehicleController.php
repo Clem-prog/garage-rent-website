@@ -38,6 +38,13 @@ class VehicleController extends Controller
         return back()->with('success', 'Vehicle added.');
     }
 
+    public function chooseVehicle(Request $request)
+    {
+        $vehicles = Vehicle::where('user_id', $request->user()->id)->get();
+ 
+        return view('user.choosevehicle', ['vehicles' => $vehicles]);
+    }
+
     public function viewVehicles(Request $request)
     {
         $vehicles = Vehicle::where('user_id', $request->user()->id)->get();

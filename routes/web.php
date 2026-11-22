@@ -17,23 +17,25 @@ Route::view('/register', 'account.register')->name('register')->middleware('gues
 Route::post('/register', [AuthController::class, 'register']);
 
 # =================== ADMIN THINGS ==================
-Route::view('/admin/garages/create', 'admin.creategarage')->middleware('auth');
-Route::view('/admin/garages', 'admin.viewgarage')->name('viewgarage')->middleware('auth');
-Route::get('/admin/garages', [GarageController::class, 'showAllGarages'])->middleware('auth');
-Route::post('/admin/garages', [GarageController::class, 'addGarage'])->middleware('auth');
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::view('/admin/garages/create', 'admin.creategarage')->middleware('auth');
+    Route::view('/admin/garages', 'admin.viewgarage')->name('viewgarage')->middleware('auth');
+    Route::get('/admin/garages', [GarageController::class, 'showAllGarages'])->middleware('auth');
+    Route::post('/admin/garages', [GarageController::class, 'addGarage'])->middleware('auth');
 
-Route::view('/admin/users', 'admin.reviewusers')->middleware('auth');
-Route::get('/admin/users', [UserController::class, 'reviewUsers'])->middleware('auth');
-Route::post('/admin/users/{user}/accept', [UserController::class, 'approve'])->middleware('auth');
-Route::post('/admin/users/{user}/decline', [UserController::class, 'decline'])->middleware('auth');
+    Route::view('/admin/users', 'admin.reviewusers')->middleware('auth');
+    Route::get('/admin/users', [UserController::class, 'reviewUsers'])->middleware('auth');
+    Route::post('/admin/users/{user}/accept', [UserController::class, 'approve'])->middleware('auth');
+    Route::post('/admin/users/{user}/decline', [UserController::class, 'decline'])->middleware('auth');
 
-Route::view('/admin/rents', 'admin.viewrent')->middleware('auth');
-Route::get('/admin/rents', [RentController::class, 'viewRents'])->middleware('auth');
-Route::get('/admin/rents/{rent}/extend', [RentController::class, 'extendForm'])->middleware('auth');
-Route::post('/admin/rents/{rent}/extend', [RentController::class, 'extendRent'])->middleware('auth');
+    Route::view('/admin/rents', 'admin.viewrent')->middleware('auth');
+    Route::get('/admin/rents', [RentController::class, 'viewRents'])->middleware('auth');
+    Route::get('/admin/rents/{rent}/extend', [RentController::class, 'extendForm'])->middleware('auth');
+    Route::post('/admin/rents/{rent}/extend', [RentController::class, 'extendRent'])->middleware('auth');
 
-Route::view('/admin/report', 'admin.reportrent')->middleware('auth');
-Route::get('/admin/report', [RentController::class, 'report'])->middleware('auth');
+    Route::view('/admin/report', 'admin.reportrent')->middleware('auth');
+    Route::get('/admin/report', [RentController::class, 'report'])->middleware('auth');
+});
 
 # =================== USER THINGS ==================
 Route::view('/vehicles/create', 'user.addvehicle')->middleware('auth');
@@ -41,7 +43,7 @@ Route::view('/vehicles', 'user.viewvehicle')->middleware('auth');
 Route::get('/vehicles', [VehicleController::class, 'viewVehicles'])->middleware('auth');
 Route::post('/vehicles', [VehicleController::class, 'addVehicle'])->middleware('auth');
 
-Route::get('/rent', [RentController::class, 'chooseVehicle'])->middleware('auth');
+Route::get('/rent', [VehicleController::class, 'chooseVehicle'])->middleware('auth');
 Route::get('/rent/{vehicle}', [RentController::class, 'availableGarages'])->middleware('auth');
 Route::get('/rent/{vehicle}/{garage}', [RentController::class, 'rentForm'])->middleware('auth');
 Route::post('/rent/{vehicle}/{garage}', [RentController::class, 'addRent'])->middleware('auth');

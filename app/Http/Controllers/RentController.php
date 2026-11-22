@@ -18,20 +18,6 @@ class RentController extends Controller
         'car' => ['car'],
         'electric car' => ['car', 'electric car'],
     ];
-
-    public function getVehicles(Request $request)
-    {
-        $vehicles = Vehicle::where('user_id', $request->user()->id)->get();
- 
-        return view('user.choosevehicle', ['vehicles' => $vehicles]);
-    }
-
-    public function chooseVehicle(Request $request)
-    {
-        $vehicles = Vehicle::where('user_id', $request->user()->id)->get();
- 
-        return view('user.choosevehicle', ['vehicles' => $vehicles]);
-    }
  
     // find garages that fit the vehicle and are free today
     public function availableGarages(Request $request, Vehicle $vehicle)

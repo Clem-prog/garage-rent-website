@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->redirectUsersTo('/home');
         $middleware->redirectGuestsTo(fn () => route('account.login'));
+        $middleware->alias(['admin' => \App\Http\Middleware\AdminOnly::class]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
