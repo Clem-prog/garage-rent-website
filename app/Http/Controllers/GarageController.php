@@ -85,6 +85,6 @@ class GarageController extends Controller
             }
         }
 
-        return view('admin.viewgarage', ['batches' => $batches]);
+        return view('admin.listgarage', ['batches' => $batches]);
     }
 }

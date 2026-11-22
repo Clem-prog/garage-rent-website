@@ -36,7 +36,7 @@ class RentController extends Controller
             ->orderBy('id')
             ->get();
  
-        return view('user.rentgarage', [
+        return view('user.availablegarage', [
             'vehicle' => $vehicle,
             'types' => $types,
             'garages' => $garages,
@@ -175,7 +175,7 @@ class RentController extends Controller
             ->orderBy('startDate')
             ->get();
  
-        return view('admin.viewrent', ['rents' => $rents]);
+        return view('admin.allrent', ['rents' => $rents]);
     }
  
     public function extendForm(Rent $rent)

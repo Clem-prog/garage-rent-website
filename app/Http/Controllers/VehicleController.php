@@ -49,6 +49,6 @@ class VehicleController extends Controller
     {
         $vehicles = Vehicle::where('user_id', $request->user()->id)->get();
 
-        return view('user.viewvehicle', ['vehicles' => $vehicles]);
+        return view('user.listvehicle', ['vehicles' => $vehicles]);
     }
 }
