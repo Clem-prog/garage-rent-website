@@ -14,5 +14,11 @@ class Garage extends Model
         'garageType',
         'rentPrice',
         'electricPrice',
+        'amount'
     ];
+
+    public function rents()
+    {
+        return $this->hasMany(Rent::class);
+    }
 }

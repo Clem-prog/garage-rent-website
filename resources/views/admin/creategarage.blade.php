@@ -40,7 +40,7 @@
     const price = document.getElementById('electricPrice')
 
     function toggle() {
-        const show = type.value === 'electric car';
+        const show = type.value === 'electric car' || type.value === 'car';
         price.style.display = show ? 'block' : 'none';
         price.required = show;
         if (!show) price.value = '';

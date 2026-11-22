@@ -17,7 +17,7 @@ class UserController extends Controller
         return view('admin.reviewuser', ['users' => $users]);
     }
  
-    public function accept(User $user)
+    public function approve(User $user)
     {
         $user->isApproved = true;
         $user->save();

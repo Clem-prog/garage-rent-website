@@ -21,13 +21,13 @@ class GarageController extends Controller
             'garageType' => ['required', Rule::in(array_keys($this->prefixes))],
             'rentPrice' => 'required|integer|min:0',
             'amount' => 'required|integer|min:1|max:999',
-            'electricPrice' => 'nullable|integer|min:0|required_if:garageType,electric car',
+            'electricPrice' => 'nullable|integer|min:0|required_if:garageType,car,electric car',
         ]);
  
         $type = $data['garageType'];
         $amount = (int) $data['amount'];
         $prefix = $this->prefixes[$type];
-        $electricPrice = $type === 'electric car' ? (int) $data['electricPrice'] : 0;
+        $electricPrice = $type === 'bicycle' ? 0 : (int) $data['electricPrice'];
  
         // Continue numbering from the last garage of the same type
         $last = Garage::where('garageType', $type)->max('id');
@@ -46,6 +46,7 @@ class GarageController extends Controller
                 'garageType' => $type,
                 'rentPrice' => $data['rentPrice'],
                 'electricPrice' => $electricPrice,
+                'amount' => $data['amount'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
@@ -56,7 +57,7 @@ class GarageController extends Controller
         return back()->with('success', $amount . ' garage(s) created.');
     }
 
-    public function viewGarages()
+    public function showAllGarages()
     {
         $batches = [];
         $garages = Garage::orderBy('garageType')->orderBy('id')->get();
